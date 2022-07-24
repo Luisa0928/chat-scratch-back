@@ -1,0 +1,358 @@
+{
+	"info": {
+		"_postman_id": "e374395f-007a-4112-8cc0-5607547baa71",
+		"name": "Chats",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "16870580"
+	},
+	"item": [
+		{
+			"name": "Sign In - Incorrect",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 403\", function () {\r",
+							"    pm.response.to.have.status(403);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Error reported\", function () {\r",
+							"    var response = pm.response.json();\r",
+							"    pm.expect(response.error).to.not.empty;\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"{{email}}\",\r\n    \"password\": \"{{pass}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{protocol}}://{{domain}}:{{port}}/auth/signIn",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{domain}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"auth",
+						"signIn"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Sign Up - Correct",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"No error reported\", function () {\r",
+							"    var response = pm.response.json();\r",
+							"    pm.expect(response.error).to.eql(false);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"{{email}}\",\r\n    \"password\": \"{{pass}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{protocol}}://{{domain}}:{{port}}/auth/signUp",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{domain}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"auth",
+						"signUp"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Sign Up - Incorrect",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 403\", function () {\r",
+							"    pm.response.to.have.status(403);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Error reported\", function () {\r",
+							"    var response = pm.response.json();\r",
+							"    pm.expect(response.error.message).to.eql(\"A user with that email already exists\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"{{email}}\",\r\n    \"password\": \"{{pass}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{protocol}}://{{domain}}:{{port}}/auth/signUp",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{domain}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"auth",
+						"signUp"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Sign In - Correct",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var response = pm.response.json();\r",
+							"pm.environment.set(\"token\", response.data.token);\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"No error reported\", function () {\r",
+							"    var response = pm.response.json();\r",
+							"    pm.expect(response.error).to.eql(false);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Token exists\", function () {\r",
+							"    var response = pm.response.json();\r",
+							"    pm.expect(response.data.token).to.not.empty;\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"{{email}}\",\r\n    \"password\": \"{{pass}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{protocol}}://{{domain}}:{{port}}/auth/signIn",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{domain}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"auth",
+						"signIn"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Verify Token - Correct",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"No error reported\", function () {\r",
+							"    var response = pm.response.json();\r",
+							"    pm.expect(response.error).to.eql(false);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Was validated\", function () {\r",
+							"    var response = pm.response.json();\r",
+							"    pm.expect(response.data.authorized).to.eql(true);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"token\": \"{{token}}\",\r\n    \"email\": \"{{email}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{protocol}}://{{domain}}:{{port}}/auth/verifyToken",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{domain}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"auth",
+						"verifyToken"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Verify Token - Incorrect by email",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 403\", function () {\r",
+							"    pm.response.to.have.status(403);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Error reported\", function () {\r",
+							"    var response = pm.response.json();\r",
+							"    pm.expect(response.error).to.not.empty;\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"token\": \"{{token}}\",\r\n    \"email\": \"{{wrongEmail}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{protocol}}://{{domain}}:{{port}}/auth/verifyToken",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{domain}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"auth",
+						"verifyToken"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Verify Token - Incorrect by token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 403\", function () {\r",
+							"    pm.response.to.have.status(403);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Error reported\", function () {\r",
+							"    var response = pm.response.json();\r",
+							"    pm.expect(response.error).to.not.empty;\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"token\": \"{{wrongToken}}\",\r\n    \"email\": \"{{email}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{protocol}}://{{domain}}:{{port}}/auth/verifyToken",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{domain}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"auth",
+						"verifyToken"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
