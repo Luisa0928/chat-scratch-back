@@ -6,6 +6,7 @@
 const express = require('express');
 
 const authRoute = express.Router();
+
 /**
  * @requires module {@link module: authController}
  */

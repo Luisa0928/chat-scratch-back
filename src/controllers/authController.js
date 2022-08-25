@@ -5,6 +5,8 @@
  * @module authController
  */
 
+/** Importa las funciones de service que contienen la logica del negocio,
+ * para traducirlas al servidor */
 const {
   signInService,
   signUpService,
@@ -12,7 +14,10 @@ const {
 } = require('../services/authService');
 
 /**
- *
+ * Recibe la peticion de los usuarios que desean ingresar al chat y valida si las credenciales
+ * de ingreso son correctas, completan o equivocdas para enviar un mensaje de error
+ * @param {string} req requisitos que debe ingresar el usuario
+ * @param {string} res respuesta que le otorga el servidor
  */
 function signIn(req, res) {
   const { email, password } = req.body;
@@ -57,6 +62,12 @@ function signIn(req, res) {
   );
 }
 
+/**
+ * Recibe la peticion de los usuarios que se registran por primera vez para crear una cuenta,
+ * y valida si las datos estan completos o si la cuenta ya existe para enviar un mensaje al usuario.
+ * @param {string} req requisitos que debe ingresar el usuario
+ * @param {string} res respuesta que le otorga el servidor
+ */
 function signUp(req, res) {
   const { email, password } = req.body;
   if (!email) {
@@ -99,7 +110,13 @@ function signUp(req, res) {
     },
   );
 }
-
+/**
+ * Verifica que el usuario haya ingresado el correo de su cuenta y valida si el token para ese
+ * correo es el token que autoriza el servicio de autencticacion.
+ * Envia un mensaje de si/no autorizacion.
+ * @param {string} req requisitos que debe ingresar el usuario
+ * @param {string} res respuesta que le otorga el servidor
+ */
 function verifyToken(req, res) {
   const { email, token } = req.body;
   if (!email) {
@@ -144,7 +161,10 @@ function verifyToken(req, res) {
 }
 
 module.exports = {
+  /** Valido la autorizacion de ingreso de un usuario a una cuenta ya creada */
   signIn,
+  /** Creo por primera vez la cuenta de un nuevo usuario, si no exitia */
   signUp,
+  /** Valido que el correo otorgado por el usuario,corresponda al token autorizado */
   verifyToken,
 };
